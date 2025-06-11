@@ -3,6 +3,9 @@ from .models import Game
 
 
 class GameRenterSerializer(serializers.ModelSerializer):
+    created_by = serializers.SerializerMethodField()
+
+
     class Meta:
         model = Game
         fields =  '__all__'
