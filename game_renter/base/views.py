@@ -38,6 +38,7 @@ def get_game(request, pk):
     serializer = GameRenterSerializer(game)
 
     return Response(serializer.data)
+
 @permission_classes([IsAuthenticated])
 @api_view(["PUT"])
 def update_game(request, pk):
