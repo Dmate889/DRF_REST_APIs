@@ -25,6 +25,10 @@ def create_game(request):
 @api_view(["GET"])
 def get_games(request):
     games = Game.objects.all()
+    search_query = request.query_params.get("search")
+    if search_query:
+        games = games.filter(name__icontains=search_query)
+
     serializer = GameRenterSerializer(games, many = True)
     return Response(serializer.data)
 
