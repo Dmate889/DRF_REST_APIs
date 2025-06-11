@@ -5,13 +5,10 @@ from .models import Game
 class GameRenterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = [
-            "id",
-            "name",
-            "developer",
-            "bio",
-            "release_year",
-            "is_rented",
-            "amount"
-        ]
+        fields =  '__all__'
+        read_only_fields = ['created_by']
+
+    def get_created_by(self, obj):
+        return obj.created_by.username if obj.created_by else None
+
 

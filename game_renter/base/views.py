@@ -17,7 +17,7 @@ def create_game(request):
     serializer = GameRenterSerializer(data = request.data)
 
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(created_by = request.user)
         return Response(serializer.data)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
@@ -51,4 +51,11 @@ def delete_game(request, pk):
     game = Game.objects.get(id = pk)
     game.delete()
     return Response({"message": "Game deleted"}, status = status.HTTP_200_OK)
+
+@permission_classes([IsAuthenticated])
+@api_view(["POST"])
+def delete_all(request):
+    game = Game.objects.all()
+    game.delete()
+    return Response({"all games have been deleted"}, status = status.HTTP_200_OK)
 
